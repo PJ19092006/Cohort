@@ -1,4 +1,5 @@
 import express from "express";
+import { z } from "zod";
 const app = express();
 const port = 3002;
 let numOfReq = 0;
