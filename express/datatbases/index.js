@@ -12,7 +12,7 @@ const port = 3008;
 app.use(express.json());
 
 mongoose.connect(
-  "mongodb+srv://panny4374_db_user:DLkwswevfiCScxL9@cluster0.0zwsyzv.mongodb.net/cohort",
+
 );
 
 async function userExists(username) {
