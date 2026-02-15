@@ -3,6 +3,8 @@ import users from "./user.js";
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 function calculateSum(n) {
   let ans = 0;
   for (let i = 0; i <= n; i++) {
@@ -12,12 +14,13 @@ function calculateSum(n) {
 }
 
 app.get("/", (req, res) => {
-  const name = users[0].name;
   const PJKidney = users[0].kidneys;
   const numOfKidneys = PJKidney.length;
   let numberOfHealthyKidneys = 0;
   for (let i = 0; i < numOfKidneys; i++) {
-    numberOfHealthyKidneys++;
+    if (PJKidney[i].healthy) {
+      numberOfHealthyKidneys++;
+    }
   }
   const numOfunhealthy = numOfKidneys - numberOfHealthyKidneys;
   res.json({
@@ -27,13 +30,28 @@ app.get("/", (req, res) => {
   });
 });
 app.post("/", (req, res) => {
-  res.send("you are on the home page");
+  const isHealthy = req.body.isHealthy;
+  users[0].kidneys.push({
+    healthy: isHealthy,
+  });
+  res.json({
+    msg: "added",
+  });
 });
 app.put("/", (req, res) => {
-  res.send("you are on the home page");
+  for (let i = 0; i <= users[0].kidneys.length; i++) {
+    users[0].kidneys[i].healthy = true;
+    res.json({
+      allHealthy: "done",
+    });
+  }
 });
 app.delete("/", (req, res) => {
-  res.send("you are on the home page");
+  let newUser = users[0].kidneys.filter((k) => k.healthy);
+  users[0].kidneys = newUser;
+  res.json({
+    msg: "done",
+  });
 });
 
 app.get("/sum", (req, res) => {
