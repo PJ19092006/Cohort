@@ -5,7 +5,6 @@ let requestCount = 0;
 
 function reqCounter(req, res, next) {
   requestCount++;
-  console.log(requestCount);
   next();
 }
 
